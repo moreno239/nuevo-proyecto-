@@ -1,0 +1,236 @@
+
+*{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.dashboard-container{
+
+display:flex;
+min-height: 100vh;
+width: 100%;
+font-family:Arial;
+
+
+}
+
+
+/* SIDEBAR */
+
+.sidebar{
+
+width:260px;
+background:#1f7a4c;
+color:white;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+padding:20px;
+min-height: 100vh;
+
+}
+
+.sidebar-header{
+
+text-align:center;
+font-size:22px;
+font-weight:bold;
+margin-top: 40px;
+}
+
+.sidebar-menu{
+
+display:flex;
+flex-direction:column;
+gap:10px;
+margin-top:20px;
+
+}
+
+.sidebar-menu button{
+
+background:#3b8f5f;
+border:none;
+color:white;
+padding:12px;
+margin-bottom:3px;
+border-radius:8px;
+cursor:pointer;
+transition:0.2s;
+
+}
+
+.sidebar-menu button:hover{
+
+background:#4fa874;
+transform:translateX(3px);
+
+}
+
+
+/* FOOTER */
+
+.sidebar-footer{
+margin-bottom:20px;
+
+}
+.sidebar-separator{
+    border-bottom: 2px solid rgba(255,255,255,0.15);
+}
+.logout{
+
+background:#46a36f;
+border:none;
+padding:12px;
+width:100%;
+border-radius:6px;
+color:white;
+cursor:pointer;
+
+}
+
+.logout:hover{
+
+background:#5cc489;
+
+}
+
+
+/* CONTENIDO DERECHO */
+
+.main-content{
+
+flex:1;
+background:#f5f5f5;
+padding:40px;
+width: 100%;
+overflow-y: auto;
+}
+
+.main-content h1{
+
+color:#1f7a4c;
+
+}
+
+
+/* TABLA */
+
+.tabla-container{
+
+margin-top: 50px;
+background:white;
+padding:20px;
+border-radius:10px;
+max-width:1300px;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
+
+}
+
+table{
+
+width:100%;
+border-collapse:collapse;
+
+}
+
+thead{
+
+background:#e9f5ef;
+
+}
+
+th,td{
+
+padding:12px;
+text-align:left;
+
+}
+
+tbody tr{
+
+border-bottom:1px solid #ddd;
+
+}
+
+.card{
+
+background:white;
+padding:25px;
+border-radius:10px;
+margin-bottom:30px;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
+max-width: 450  px;
+
+}
+
+.btn-verde{
+
+margin-top:15px;
+padding:12px 20px;
+background:#2e8b57;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+
+}
+
+.btn-verde:hover{
+
+background:#3aa56a;
+
+}
+.box-form{
+   display: grid;
+   place-items: center;
+   
+}
+.formulario-card{
+
+background:white;
+padding:30px;
+border-radius:12px;
+max-width: 700px;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
+
+}
+
+form{
+
+display:flex;
+flex-direction:column;
+gap:10px;
+
+}
+
+input, select{
+
+padding:10px;
+border-radius:6px;
+border:1px solid #ccc;
+
+}
+
+h3{
+
+margin-top:20px;
+color:#2e7d4f;
+
+}
+
+.form-botones{
+
+margin-top:20px;
+display:flex;
+gap:10px;
+
+}
+
+.btn-cancelar{
+
+background:#ccc;
+border:none;
+padding:10px 18px;
+border-radius:6px;
+cursor:pointer;
+
+}

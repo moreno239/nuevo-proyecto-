@@ -1,0 +1,203 @@
+<div class="dashboard-container">
+
+  <!-- MENU LATERAL -->
+  <div class="sidebar">
+
+    <div class="sidebar-header">
+
+      <h2>Productor</h2>
+
+    </div>
+    <div class="sidebar-separator"></div>
+    <div class="sidebar-menu">
+
+        <button (click)="cambiarVista('inicio')">Inicio</button>
+
+        <button  (click)="cambiarVista('predio')">Registrar Predio</button>
+
+        <button  (click)="cambiarVista('producción')">Registrar Predio de Producción</button>
+
+        <button  (click)="cambiarVista('visita')">Solicitar Visita Fitosanitaria</button>
+
+    </div>
+    <div class="sidebar-separator"></div>
+    <div class="sidebar-footer">
+
+      <button class="logout" (click)="cerrarSesion()">Cerrar sesión</button>
+
+    </div>
+
+  </div>
+
+
+<div class="main-content">
+    <div *ngIf="vistaActual==='inicio'">
+
+        <h1>Bienvenido Productor</h1>
+
+        <p>Aquí tienes un resumen de tus actividades recientes.</p>
+
+
+        <div class="tabla-container">
+
+            <h3>Mis Predios Registrados</h3>
+
+            <table>
+
+                <thead>
+
+                <tr>
+                    <th>Nombre del Predio</th>
+                    <th>Municipio</th>
+                    <th>Área (Ha)</th>
+                    <th>Estado</th>
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                <tr *ngFor="let predio of predios">
+
+                    <td>{{predio.nombre}}</td>
+
+                    <td>{{predio.municipio}}</td>
+
+                    <td>{{predio.area}}</td>
+
+                    <td>{{predio.estado}}</td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- REGISTRAR PREDIO -->
+
+    <div *ngIf="vistaActual === 'predio'">
+
+        <div class="card">
+
+            <h2>Registrar un nuevo predio</h2>
+
+            <p>
+                Si deseas registrar un nuevo predio en el sistema,
+                puedes solicitar su registro.
+            </p>
+
+            <button class="btn-verde" (click)="cambiarVista('formulario')">Solicitar Registro</button>
+               
+                    
+
+
+
+
+        </div>
+
+
+        <div class="tabla-container">
+
+            <h3>Mis Predios Registrados</h3>
+
+            <table>
+
+            <thead>
+            <tr>
+            <th>Nombre del Predio</th>
+            <th>Municipio</th>
+            <th>Área</th>
+            <th>Estado</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr *ngFor="let predio of predios">
+
+            <td>{{predio.nombre}}</td>
+            <td>{{predio.municipio}}</td>
+            <td>{{predio.area}}</td>
+            <td>{{predio.estado}}</td>
+
+            </tr>
+
+            </tbody>
+
+            </table>
+
+        </div>
+    </div>
+
+
+
+    <!--vista formulario-->
+ <div class="box-form">
+    <div *ngIf="vistaActual=== 'formulario'" class="formulario-card">
+
+        <h2>Solicitud de Registro de Predio</h2>
+
+            <form>
+
+
+                <h3>Dirección del predio</h3>
+
+                <label>Departamento</label>
+                <select>
+
+                <option value="">Seleccione un departamento</option>
+
+                <option *ngFor="let d of departamentos">
+                {{d}}
+                </option>
+
+                </select>
+
+                <label>Ciudad / Municipio</label>
+                    <input type="text" placeholder="Municipio">
+
+                <label>Vereda</label>
+                    <input type="text" placeholder="Vereda">
+
+                    <h3>Documentos requeridos</h3>
+
+                    <label>Escritura pública o título de propiedad</label>
+                    <input type="file">
+
+                    <label>Cédula de ciudadanía</label>
+                    <input type="file">
+
+                    <label>Comprobante de pago impuesto predial</label>
+                    <input type="file">
+
+                    <label>Certificado de tradición y libertad</label>
+                    <input type="file">
+
+                    <div class="form-botones">
+
+                        <button type="submit" class="btn-verde">
+                        Enviar solicitud
+                        </button>
+
+                        <button type="button" class="btn-cancelar" (click)="cambiarVista('predio')">
+                        Cancelar
+                        </button>
+
+                    </div>
+
+                </form>
+    </div>            
+ </div>     
+</div>
+
+
+
+
+
+</div>
