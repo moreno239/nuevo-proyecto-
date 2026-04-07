@@ -1,13 +1,12 @@
+    
 
-*{
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
 .dashboard-container{
+    /*caja que estiliza todo el dashboard*/
 
 display:flex;
 min-height: 100vh;
 width: 100%;
-font-family:Arial;
+
 
 
 }
@@ -15,58 +14,77 @@ font-family:Arial;
 
 /* SIDEBAR */
 
-.sidebar{
+.etiqueta{/*cajon de la etiqueta que esta sobre las opciones la de gestion*/
+
+font-size: 10px;
+font-weight: 600;
+letter-spacing: 2px;
+text-transform: uppercase; /*para que este en mayuscula en caso de que no */
+color: rgba(255,255,255,0.45);
+padding: 0 6px;
+margin-bottom: 5vh;
+
+}
+.etiqueta:first-child{/*para que ignore los parametros que le indica el cajon de side-menu*/
+    margin-top: 0;
+}
+
+.sidebar{/*estamos manejando el estilo del sidebar menu */
 
 width:260px;
-background:#1f7a4c;
+background-color: var(--verde-fondo);/*estilos globales*/
 color:white;
-display:flex;
+display:flex;/*distribuimos todo el espacio con un flex*/
 flex-direction:column;
 justify-content:space-between;
-padding:20px;
-min-height: 100vh;
+padding:10px;
+height: 100vh;/*para que tenga un maximo y no se desborde de la pantalla*/
+position: sticky;/*mantenerlo fijo*/
+top: 0;
+z-index: 1000;
 
 }
 
 .sidebar-header{
-
+/*es la parte de arriba del sidebar*/
 text-align:center;
-font-size:22px;
+font-size:20px;
 font-weight:bold;
-margin-top: 40px;
+
 }
 
 .sidebar-menu{
-
+/*cajon del medio del sidebar, donde ubicamos todas las opciones o menu  */
 display:flex;
 flex-direction:column;
-gap:10px;
+gap:4px;
 margin-top:20px;
 
 }
 
 .sidebar-menu button{
+    /*las opciones a elegir*/
 
-background:#3b8f5f;
+background: var(--verde-botones2);
 border:none;
 color:white;
-padding:12px;
-margin-bottom:3px;
+text-align: start;
+padding:10px;
 border-radius:8px;
 cursor:pointer;
 transition:0.2s;
 
 }
 
-.sidebar-menu button:hover{
+.sidebar-menu button:hover{/*estilizado de los botones con animacion*/
 
-background:#4fa874;
+background:var(--verde-botones);
 transform:translateX(3px);
 
 }
 
 
-/* FOOTER */
+/* footer del sidebar*/
 
 .sidebar-footer{
 margin-bottom:20px;
@@ -76,28 +94,61 @@ margin-bottom:20px;
     border-bottom: 2px solid rgba(255,255,255,0.15);
 }
 .logout{
-
-background:#46a36f;
+/*hablamos del boton*/
+background:var(--verde-botones2);
 border:none;
 padding:12px;
 width:100%;
 border-radius:6px;
 color:white;
 cursor:pointer;
-
+transition: 0.2s;
 }
 
 .logout:hover{
-
-background:#5cc489;
+transform: scale(1.03);
+background:var(--verde-botones);
 
 }
 
+/*NAVBAR FECHA*/
+.navbar{
+    display: flex;
+    position: fixed;
+    
+    border-bottom: 1px solid #e2ebe5;
+    top: 0;
+    width: 100%;
+    left: 0;
+    justify-content: space-around;
+    height: 50px;
+    z-index: 500;
+    background: #f4f8f5;
+
+}
+
+.logo {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase; /*para que este en mayuscula en caso de que no */
+    color: var(--verde-botones); 
+
+}
+
+.fecha {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: gray;
+  
+}
 
 /* CONTENIDO DERECHO */
 
 .main-content{
-
+margin-top: 30px;
 flex:1;
 background:#f5f5f5;
 padding:40px;
@@ -107,130 +158,25 @@ overflow-y: auto;
 
 .main-content h1{
 
-color:#1f7a4c;
+color:var(--titulos);   
+
+}
+/*iconos del sidebar unicamente*/
+.icon{
+    width: 100px;
+    height: 100px;
+    display: block;
+    margin: 0 auto;
+    
+}
+.icono-menu{
+    width: 20px;
+    height: 20px;
+    margin-bottom: 4px;
 
 }
 
-
-/* TABLA */
-
-.tabla-container{
-
-margin-top: 50px;
-background:white;
-padding:20px;
-border-radius:10px;
-max-width:1300px;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
-
-}
-
-table{
-
-width:100%;
-border-collapse:collapse;
-
-}
-
-thead{
-
-background:#e9f5ef;
-
-}
-
-th,td{
-
-padding:12px;
-text-align:left;
-
-}
-
-tbody tr{
-
-border-bottom:1px solid #ddd;
-
-}
-
-.card{
-
-background:white;
-padding:25px;
-border-radius:10px;
-margin-bottom:30px;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
-max-width: 450  px;
-
-}
-
-.btn-verde{
-
-margin-top:15px;
-padding:12px 20px;
-background:#2e8b57;
-color:white;
-border:none;
-border-radius:6px;
-cursor:pointer;
-
-}
-
-.btn-verde:hover{
-
-background:#3aa56a;
-
-}
-.box-form{
-   display: grid;
-   place-items: center;
-   
-}
-.formulario-card{
-
-background:white;
-padding:30px;
-border-radius:12px;
-max-width: 700px;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
-
-}
-
-form{
-
-display:flex;
-flex-direction:column;
-gap:10px;
-
-}
-
-input, select{
-
-padding:10px;
-border-radius:6px;
-border:1px solid #ccc;
-
-}
-
-h3{
-
-margin-top:20px;
-color:#2e7d4f;
-
-}
-
-.form-botones{
-
-margin-top:20px;
-display:flex;
-gap:10px;
-
-}
-
-.btn-cancelar{
-
-background:#ccc;
-border:none;
-padding:10px 18px;
-border-radius:6px;
-cursor:pointer;
-
+.icono{
+    width: 30px;
+    height: 30px;
 }

@@ -7,7 +7,7 @@
     font-size: 35px;
     line-height:1.5;
     font-weight: bold;
-    color: #1e804f;
+    color: #428e58;
 }
 /*seccion donde esta el login*/
 .login-left{
@@ -21,8 +21,7 @@
 /*ventana donde esta la info de asohofrucol*/
 .login-right{
     flex:1;
-    background:#22965c;
-    color:white;
+    background: rgb(38, 126, 67);
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -35,7 +34,7 @@
     width: 100%;
     max-width: 350px;
 }
-/*seccion encima de los input*/
+/*seccion de los nombres encima de los input*/
 .campo-grupo label {
     display: block;
     font-size: 13px;
@@ -63,13 +62,13 @@
 /* Estado de foco: resalta con color verde */
 .campo-grupo input:focus {
     border-color:  #2d9157;
-    background-color: #fbfafa;
+    background-color: #d6d8d777;
     box-shadow: 0 0 0 4px rgba(45, 145, 87, 0.1);
 }
 /*Seccion del boton ingreso*/
 .btn-ingreso{
     padding:10px 20px;
-    background:#1e804f;
+    background: var(--verde-botones2);
     color:white;
     border:none;
     cursor:pointer;
@@ -77,6 +76,11 @@
     font-size: 15px;
     font-weight: 500px;
     width: 100%;
+    transition: all 0.4s ease;
+}
+
+.btn-ingreso:hover{
+    background-color: var(--verde-botones);
 }
 
 
@@ -84,7 +88,7 @@
     display: inline-block;
     padding: 12px 36px;
     background: transparent;
-    border: 2px solid rgba(255,255,255,0.6);
+    border: 2px solid rgba(255, 255, 255, 0.6);
     border-radius: 50px;     /* estilo capsula*/
     cursor: pointer;
     color: white;
@@ -93,7 +97,7 @@
 }
 
 .btn-solicitar:hover{
-    background-color: rgba(255,255,255,0.15);
+    background-color: rgba(148, 145, 145, 0.247);
     border-color: #ffff;
 
 }
@@ -103,16 +107,18 @@
 .nombre-empresa{
     font-family:  'Playfair Display', serif;
     font-size: 40px;
+    color: #f5f5f6 ;
 
 }
 /*texto debajo del titulo*/
 .texto-info{
     font-size: 15px;
-    
+    color: #f5f5f6;
 
 }
 .texto-registro{
     font-size: 13px;
+    color: #f5f5f6;
 }
 /*linea que divide la info con el boton*/
 .separador{

@@ -2,202 +2,86 @@
 
   <!-- MENU LATERAL -->
   <div class="sidebar">
-
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+    </svg>
     <div class="sidebar-header">
 
-      <h2>Productor</h2>
+      <h3>Productor</h3>
 
     </div>
+
+
     <div class="sidebar-separator"></div>
     <div class="sidebar-menu">
+      <p class="etiqueta">menu</p>
+        <button routerLink="inicio">
+          <!--Agregamos iconos-->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icono-menu">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+          </svg>
 
-        <button (click)="cambiarVista('inicio')">Inicio</button>
+          Inicio
+        </button>
 
-        <button  (click)="cambiarVista('predio')">Registrar Predio</button>
+        <button  routerLink="predio">
 
-        <button  (click)="cambiarVista('producción')">Registrar Predio de Producción</button>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icono-menu">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z" />
+          </svg>
 
-        <button  (click)="cambiarVista('visita')">Solicitar Visita Fitosanitaria</button>
+          Registrar Predios
+        
+        </button>
+
+        <button  routerLink="produccion">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icono-menu">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
+          </svg>
+
+          Registrar Lugar de Producción
+        
+        
+        </button>
+
+        <button  routerLink="visita">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icono-menu">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
+          </svg>
+
+          Inspecciones 
+        
+        </button>
 
     </div>
     <div class="sidebar-separator"></div>
     <div class="sidebar-footer">
 
-      <button class="logout" (click)="cerrarSesion()">Cerrar sesión</button>
+      <button class="logout" (click)="cerrarSesion()"> 
+        <svg class="icono" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path fill-rule="evenodd" d="M16.5 3.75a1.5 1.5 0 0 1 1.5 1.5v13.5a1.5 1.5 0 0 1-1.5 1.5h-6a1.5 1.5 0 0 1-1.5-1.5V15a.75.75 0 0 0-1.5 0v3.75a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V5.25a3 3 0 0 0-3-3h-6a3 3 0 0 0-3 3V9A.75.75 0 1 0 9 9V5.25a1.5 1.5 0 0 1 1.5-1.5h6ZM5.78 8.47a.75.75 0 0 0-1.06 0l-3 3a.75.75 0 0 0 0 1.06l3 3a.75.75 0 0 0 1.06-1.06l-1.72-1.72H15a.75.75 0 0 0 0-1.5H4.06l1.72-1.72a.75.75 0 0 0 0-1.06Z" clip-rule="evenodd" />
+        </svg>
+        Cerrar sesión
+      
+      </button>
 
     </div>
 
-  </div>
-
-
-<div class="main-content">
-    <div *ngIf="vistaActual==='inicio'">
-
-        <h1>Bienvenido Productor</h1>
-
-        <p>Aquí tienes un resumen de tus actividades recientes.</p>
-
-
-        <div class="tabla-container">
-
-            <h3>Mis Predios Registrados</h3>
-
-            <table>
-
-                <thead>
-
-                <tr>
-                    <th>Nombre del Predio</th>
-                    <th>Municipio</th>
-                    <th>Área (Ha)</th>
-                    <th>Estado</th>
-                </tr>
-
-                </thead>
-
-                <tbody>
-
-                <tr *ngFor="let predio of predios">
-
-                    <td>{{predio.nombre}}</td>
-
-                    <td>{{predio.municipio}}</td>
-
-                    <td>{{predio.area}}</td>
-
-                    <td>{{predio.estado}}</td>
-
-                </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- REGISTRAR PREDIO -->
-
-    <div *ngIf="vistaActual === 'predio'">
-
-        <div class="card">
-
-            <h2>Registrar un nuevo predio</h2>
-
-            <p>
-                Si deseas registrar un nuevo predio en el sistema,
-                puedes solicitar su registro.
-            </p>
-
-            <button class="btn-verde" (click)="cambiarVista('formulario')">Solicitar Registro</button>
-               
-                    
-
-
-
-
-        </div>
-
-
-        <div class="tabla-container">
-
-            <h3>Mis Predios Registrados</h3>
-
-            <table>
-
-            <thead>
-            <tr>
-            <th>Nombre del Predio</th>
-            <th>Municipio</th>
-            <th>Área</th>
-            <th>Estado</th>
-            </tr>
-            </thead>
-
-            <tbody>
-
-            <tr *ngFor="let predio of predios">
-
-            <td>{{predio.nombre}}</td>
-            <td>{{predio.municipio}}</td>
-            <td>{{predio.area}}</td>
-            <td>{{predio.estado}}</td>
-
-            </tr>
-
-            </tbody>
-
-            </table>
-
-        </div>
-    </div>
-
-
-
-    <!--vista formulario-->
- <div class="box-form">
-    <div *ngIf="vistaActual=== 'formulario'" class="formulario-card">
-
-        <h2>Solicitud de Registro de Predio</h2>
-
-            <form>
-
-
-                <h3>Dirección del predio</h3>
-
-                <label>Departamento</label>
-                <select>
-
-                <option value="">Seleccione un departamento</option>
-
-                <option *ngFor="let d of departamentos">
-                {{d}}
-                </option>
-
-                </select>
-
-                <label>Ciudad / Municipio</label>
-                    <input type="text" placeholder="Municipio">
-
-                <label>Vereda</label>
-                    <input type="text" placeholder="Vereda">
-
-                    <h3>Documentos requeridos</h3>
-
-                    <label>Escritura pública o título de propiedad</label>
-                    <input type="file">
-
-                    <label>Cédula de ciudadanía</label>
-                    <input type="file">
-
-                    <label>Comprobante de pago impuesto predial</label>
-                    <input type="file">
-
-                    <label>Certificado de tradición y libertad</label>
-                    <input type="file">
-
-                    <div class="form-botones">
-
-                        <button type="submit" class="btn-verde">
-                        Enviar solicitud
-                        </button>
-
-                        <button type="button" class="btn-cancelar" (click)="cambiarVista('predio')">
-                        Cancelar
-                        </button>
-
-                    </div>
-
-                </form>
-    </div>            
- </div>     
 </div>
 
 
+<div class="main-content">
+  <nav class="navbar"><!--CREAMOS UN NAVBAR ESTETICO INDICANDO LA FECHA-->
+  <div class="logo">ASOHOFRUCOL</div>
 
+  <div class="fecha">
+    {{ fechaActual | date:'fullDate' }}<!--ESTAMOS LLAMANDO LA FUNCION-->
+  </div>
+</nav>
+
+
+  <router-outlet></router-outlet>
 
 
 </div>
