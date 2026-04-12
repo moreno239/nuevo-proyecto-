@@ -4,19 +4,19 @@
 
         <p>Aquí tienes un resumen de tus actividades recientes.</p>
 
+        <div class="cards-grid"> 
+        <div class="card" *ngFor="let item of accesos">
+            <span class="card-icono">{{ item.icono }}</span>
+        <div class="card-info">
+            <span class="card-valor">{{ item.valor }}</span>
+            <span class="card-label">{{ item.label }}</span>
+            <div class="fecha-ultima" *ngIf="item.date">
+            <h3>Fecha de Aprobacion:</h3>
+            <span class="card-fecha">{{item.date}}</span>
+            </div>
+            
+        </div>
+            <button class="boton-res" [routerLink]="item.ruta"> Revisar </button>
 
-        <div class="tablas">
-            <app-tabla-predios></app-tabla-predios>
-            <button routerLink="/usuario/predio">Ver mas ></button><!--enrutando a la vista de predios-->
-        </div>
-            
-        <div class="tablas">
-            <app-tabla-produccion></app-tabla-produccion>
-            <button routerLink="/usuario/produccion">Ver mas ></button><!--enrutando a la vista de produccion-->
-            
-        </div>
-        <div class="tablas">
-            <app-tabla-inspeccion></app-tabla-inspeccion>
-            <button routerLink="/usuario/visita">Ver mas ></button><!--enrutando a la vista de inspeccion-->
         </div>
     </div>

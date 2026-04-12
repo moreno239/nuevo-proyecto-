@@ -1,3 +1,20 @@
+.inicio-container { 
+    padding: 2rem;
+} 
+/*HEADER*/
+.inicio-header h2 { /* HEADER TITULO*/
+    font-size: 1.5rem; 
+    color: #2d6a4f; 
+    margin-bottom: 0.25rem; }
+.inicio-header p  { 
+    color: #666; 
+    margin-bottom: 2rem; 
+}
+.pendientes h2{
+    font-size: 1.5rem; 
+    color: #2d6a4f;
+    margin-bottom: 2rem; 
+}
 
 /*CARTAS*/  
 .cards-grid { /* CONTENEDOR DE LAS TARJETAS EN EL DASHBOARD*/
@@ -28,14 +45,9 @@
 }
 /* TAMAÑO DE LA LETRA EN EL CARD*/
 .card-label { 
-    font-size: 1rem; 
-    color: #0c0c0c;
-    font-weight: bold;
-}
-.card-fecha{
-    font-size: 0.85rem;
-    color: #666;
-}
+    font-size: 0.85rem; 
+    color: #666; 
+} 
 .card-info{
     display: grid;
     grid-template-rows: 1fr 1fr;

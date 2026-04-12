@@ -1,0 +1,54 @@
+<!-- LISTA -->
+<div *ngIf="vista === 'lista'" class="modulo-container">
+  <div class="modulo-header">
+    <h2>Gestión de Lugares de Produccion</h2>
+    <button class="btn-nuevo" (click)="abrirNuevo()">+ Nuevo Lugar</button>
+  </div>
+
+  <table class="tabla">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Productor</th>
+        <th>Predio Asociado</th>
+        <th>Extension mts</th>
+        <th>Numero ICA</th>
+        <th>Estado</th>
+        <th><!--completa la tabla--></th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let l of lugares">
+        <td>{{ l.nombre }} </td>
+        <td>{{ l.productorTitular }}</td>
+        <td>{{ l.numeroICA }}</td>
+        <td>{{ l.predioAsociado }}</td>
+        <td>{{ l.extension }}</td>
+        <td><span [class]="'badge badge-' + l.estado.toLowerCase()">{{ l.estado }}</span></td>
+        <td class="acciones">
+          <button class="btn-editar" (click)="abrirEditar(l)">Editar</button>
+          <ng-container *ngIf="l.estado === 'Pendiente'">
+          <button class="btn-toggle" (click)="toggleEstado(l)">
+            {{ l.estado === 'Pendiente' ? 'Desactivar' : 'Activar' }}
+          </button>
+          <button class="btn-toggle" (click)="abrirRechazo(l)">Rechazar</button>
+          </ng-container>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+<!-- PARTE EN CASO DE QUE SEA RECHAZO -->
+
+
+
+
+
+
+
+
+</div>
+
+
+<!-- ÉXITO: componente compartido reutilizable -->

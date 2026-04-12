@@ -34,7 +34,7 @@ export class LoginComponent {
     }
 
     // Si es usuario normal
-    else if (rol === 'user') {
+    else if (rol === 'productor') {
 
       this.router.navigate(['/usuario'])
 

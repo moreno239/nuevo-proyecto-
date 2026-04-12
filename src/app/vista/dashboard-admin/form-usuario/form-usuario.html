@@ -1,0 +1,53 @@
+<div class="formulario">
+
+  <h2>{{ modoEdicion ? 'Editar Usuario' : 'Nuevo Usuario' }}</h2>
+
+  <div class="campo">
+    <label>Identificación</label>
+    <input type="text" [(ngModel)]="formulario.identificacion" placeholder="Número de documento"/>
+  </div>
+
+  <div class="campo">
+    <label>Nombre</label>
+    <input type="text" [(ngModel)]="formulario.nombre"/>
+  </div>
+
+  <div class="campo">
+    <label>Apellido</label>
+    <input type="text" [(ngModel)]="formulario.apellido"/>
+  </div>
+
+  <div class="campo">
+    <label>Teléfono</label>
+    <input type="text" [(ngModel)]="formulario.telefono"/>
+  </div>
+
+  <div class="campo">
+    <label>Correo</label>
+    <input type="email" [(ngModel)]="formulario.correo"/>
+  </div>
+
+  <div class="campo">
+    <label>Rol</label>
+    <select [(ngModel)]="formulario.rol">
+      <option value="">Seleccionar rol</option>
+      <option value="Productor">Productor</option>
+      <option value="Técnico">Técnico</option>
+      <option value="Administrador">Administrador</option>
+    </select>
+  </div>
+
+  <div class="campo">
+    <label>Estado</label>
+    <select [(ngModel)]="formulario.estado">
+      <option value="Activo">Activo</option>
+      <option value="Inactivo">Inactivo</option>
+    </select>
+  </div>
+
+  <div class="form-botones">
+    <button class="btn-guardar"  (click)="guardar()">Guardar</button>
+    <button class="btn-cancelar" (click)="cancelar()">Cancelar</button>
+  </div>
+
+</div>

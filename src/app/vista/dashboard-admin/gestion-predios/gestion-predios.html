@@ -1,0 +1,46 @@
+<!-- LISTA -->
+<div *ngIf="vista === 'lista'" class="modulo-container">
+  <div class="modulo-header">
+    <h2>Gestión de Predios</h2>
+    <button class="btn-nuevo" (click)="abrirNuevo()">+ Nuevo Predio</button>
+  </div>
+
+  <table class="tabla">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Propietario</th>
+        <th>Departamento</th>
+        <th>Municipio</th>
+        <th>Vereda</th>
+        <th>Extension</th>
+        <th>Numero ICA</th>
+        <th>Estado</th>
+        <th><!--completa la tabla--></th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of predios">
+        <td>{{ p.nombre }} </td>
+        <td>{{ p.propietario }}</td>
+        <td>{{ p.departamento }}</td>
+        <td>{{ p.municipio }}</td>
+        <td>{{ p.vereda }}</td>
+        <td>{{ p.extension}}</td>
+        <td>{{ p.numeroICA }}</td>
+        <td><span [class]="'badge badge-' + p.estado.toLowerCase()">{{ p.estado }}</span></td>
+        <td class="acciones">
+          <button class="btn-editar" (click)="abrirEditar(p)">Editar</button>
+          <button class="btn-toggle" (click)="toggleEstado(p)">
+            {{ p.estado === 'Activo' ? 'Desactivar' : 'Activar' }}
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- FORMULARIO: delega todo al componente hijo -->
+
+
+<!-- ÉXITO: componente compartido reutilizable -->

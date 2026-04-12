@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TablaInspeccion } from './tabla-inspeccion/tabla-inspeccion';
+import { TablaInspeccion } from '../tabla-inspeccion/tabla-inspeccion';
 import { RouterLink } from '@angular/router';
 
 @Component({

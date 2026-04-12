@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DashboardTecnico } from './dashboard-tecnico';
+import { GestionLotes } from './gestion-lotes';
 
-describe('DashboardTecnico', () => {
-  let component: DashboardTecnico;
-  let fixture: ComponentFixture<DashboardTecnico>;
+describe('GestionLotes', () => {
+  let component: GestionLotes;
+  let fixture: ComponentFixture<GestionLotes>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DashboardTecnico],
+      imports: [GestionLotes],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DashboardTecnico);
+    fixture = TestBed.createComponent(GestionLotes);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

@@ -1,11 +1,15 @@
-import { Injectable } from '@angular/core'
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core'
+import { isPlatformBrowser } from '@angular/common';
 import { User } from '../modelo/usuario-modelo';
+import { platform } from 'os';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
+
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   // Lista de usuarios simulados
   private users: User[] = [
@@ -18,8 +22,8 @@ export class AuthService {
 
     {
       usuario: 'productor',
-      password: '1234',
-      rol: 'user'
+      password: '12345',
+      rol: 'productor'
     }
 
   ]
@@ -33,13 +37,10 @@ export class AuthService {
     )
 
     // Si el usuario existe
-    if (user) {
+    if (user && isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('userRole', user.rol);
 
-      // Guardar sesión
-      localStorage.setItem('userRole', user.rol)
-
-      return user.rol
-
+      return user.rol;
     }
 
     // Si no existe
@@ -48,8 +49,9 @@ export class AuthService {
   }
 
     logout() {
-
-    localStorage.removeItem('rol')
+      if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('userRole');
+    }
 
   }
 }

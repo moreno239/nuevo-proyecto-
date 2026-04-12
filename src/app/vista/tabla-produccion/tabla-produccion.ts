@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-tabla-produccion',
   imports: [CommonModule],
+  standalone: true,
   templateUrl: './tabla-produccion.html',
   styleUrl: './tabla-produccion.css',
 })
