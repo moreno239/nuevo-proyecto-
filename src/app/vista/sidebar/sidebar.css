@@ -16,7 +16,7 @@ margin-bottom: 5vh;
 
 .sidebar{/*estamos manejando el estilo del sidebar menu */
 
-width:260px;
+width:250px;
 background-color: var(--verde-fondo);/*estilos globales*/
 color:white;
 display:flex;/*distribuimos todo el espacio con un flex*/

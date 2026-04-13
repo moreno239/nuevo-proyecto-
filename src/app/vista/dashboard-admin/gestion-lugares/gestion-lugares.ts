@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ModalService } from '../../../soa/modal-service'; // ← agrega
+import { ModalService } from '../../../soa/modal-service'; // ← modalrechazo
 
 
 export interface LugarProduccion {
@@ -52,17 +52,29 @@ constructor(private modalService: ModalService) {}
 
 
  vista: 'lista' | 'formulario' | 'exito' = 'lista';
-  lugarSeleccionado: LugarProduccion | null = null;
-
+  modoEdicion = false;
+  mostrarModalRechazo = false;
+  lugarArechazar: LugarProduccion | null = null;
+  motivoRechazo = '';
 //funcion para activar o inactivar un lugar
  toggleEstado(l: LugarProduccion): void { l.estado = l.estado === 'Activo' ? 'Inactivo' : 'Activo'; }
   
+//formulario 
+  formulario: LugarProduccion = this.formularioVacio();
 
-  abrirNuevo():void { this.lugarSeleccionado = null;   this.vista = 'formulario'; } //agregar un nuevo lugar "null"
-  abrirEditar(l: LugarProduccion): void  //editar un lugar ya existente
-      { this.lugarSeleccionado = l;
-          this.vista = 'formulario'; 
-        }
+  formularioVacio(): LugarProduccion {
+    return {  id: 0,
+    nombre: '',
+    productorTitular: '',
+    numeroICA: '',
+    predioAsociado:  '' ,   
+    extension: 0,
+    estado: 'Pendiente' 
+    };
+  }
+  abrirNuevo():void { this.formulario = this.formularioVacio();   this.vista = 'formulario'; } //agregar un nuevo lugar "null"
+  abrirEditar(l: LugarProduccion) //editar un lugar ya existente
+      { this.formulario = { ...l }; this.modoEdicion = true; this.vista = 'formulario'; }
 
   aprobar(l: LugarProduccion): void {
     l.estado    = 'Activo';
