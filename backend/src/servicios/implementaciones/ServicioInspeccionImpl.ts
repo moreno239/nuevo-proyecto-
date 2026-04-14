@@ -88,9 +88,27 @@ export class ServicioInspeccionImpl implements IServicioInspeccion {
   }
 
   async consultarInspecciones(filtros: any): Promise<any[]> {
-    const sql = `SELECT * FROM ORDEN_INSPECCION`;
+    let sql = `SELECT o.*, l.nombre as lugarProduccion 
+               FROM ORDEN_INSPECCION o
+               INNER JOIN LUGAR_PRODUCCION l ON o.nroRegICAlugar = l.nroRegistroICA
+               WHERE 1=1`;
+    const valores: any[] = [];
+
+    if (filtros.estado) {
+      sql += ` AND o.estado = ?`;
+      valores.push(filtros.estado);
+    }
+    if (filtros.tipoInspeccion) {
+      sql += ` AND o.tipoInspeccion = ?`;
+      valores.push(filtros.tipoInspeccion);
+    }
+    if (filtros.nroRegICAlugar) {
+      sql += ` AND o.nroRegICAlugar = ?`;
+      valores.push(filtros.nroRegICAlugar);
+    }
+
     return new Promise((resolve, reject) => {
-      conexion.query(sql, (error, resultado: any) => {
+      conexion.query(sql, valores, (error, resultado: any) => {
         if (error) reject(error);
         else resolve(resultado);
       });
@@ -98,12 +116,16 @@ export class ServicioInspeccionImpl implements IServicioInspeccion {
   }
 
   async consultarInspeccionesAsignadas(documentoTecnico: string): Promise<any[]> {
-    const sql = `SELECT * FROM ORDEN_INSPECCION WHERE documentoTecnico = ?`;
+    const sql = `SELECT o.*, l.nombre as lugarProduccion 
+                 FROM ORDEN_INSPECCION o
+                 INNER JOIN LUGAR_PRODUCCION l ON o.nroRegICAlugar = l.nroRegistroICA
+                 WHERE o.documentoTecnico = ?
+                 ORDER BY o.fechaProgramada ASC`;
     return new Promise((resolve, reject) => {
       conexion.query(sql, [documentoTecnico], (error, resultado: any) => {
         if (error) reject(error);
         else resolve(resultado);
       });
-    });
+    });  
   }
-}
+  }

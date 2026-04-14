@@ -50,7 +50,12 @@ export const registrarResultadoTecnico = async (req: Request<{idOrden: string}>,
 
 export const consultarInspecciones = async (req: Request, res: Response): Promise<void> => {
   try {
-    const inspecciones = await servicioInspeccion.consultarInspecciones(req.query);
+    const filtros = {
+      estado: req.query.estado,
+      tipoInspeccion: req.query.tipoInspeccion,
+      nroRegICAlugar: req.query.nroRegICAlugar
+    };
+    const inspecciones = await servicioInspeccion.consultarInspecciones(filtros);
     res.status(200).json(inspecciones);
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al consultar inspecciones', error });
@@ -60,7 +65,11 @@ export const consultarInspecciones = async (req: Request, res: Response): Promis
 export const consultarInspeccionesAsignadas = async (req: Request<{documentoTecnico: string}>, res: Response): Promise<void> => {
   try {
     const inspecciones = await servicioInspeccion.consultarInspeccionesAsignadas(req.params.documentoTecnico);
-    res.status(200).json(inspecciones);
+    if (inspecciones.length === 0) {
+      res.status(200).json({ mensaje: 'No tiene inspecciones asignadas', datos: [] });
+    } else {
+      res.status(200).json(inspecciones);
+    }
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al consultar inspecciones asignadas', error });
   }
