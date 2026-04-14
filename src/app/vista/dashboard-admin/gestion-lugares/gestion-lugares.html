@@ -29,26 +29,80 @@
           <button class="btn-editar" (click)="abrirEditar(l)">Editar</button>
           <ng-container *ngIf="l.estado === 'Pendiente'">
           <button class="btn-toggle" (click)="toggleEstado(l)">
-            {{ l.estado === 'Pendiente' ? 'Desactivar' : 'Activar' }}
+            {{ l.estado === 'Pendiente' ? 'Activar' : 'Desactivar' }}
           </button>
           <button class="btn-toggle" (click)="abrirRechazo(l)">Rechazar</button>
           </ng-container>
+          <ng-container *ngIf="l.estado ==='Activo'">
+          <button class="btn-rechazar" (click)="toggleEstado(l)">
+            {{ l.estado === 'Activo' ? 'Desactivar' : 'Activar' }}
+          </button>            
+          </ng-container>
+          <ng-container *ngIf="l.estado ==='Inactivo'">
+          <button class="btn-aprobar" (click)="toggleEstado(l)">
+            {{ l.estado === 'Inactivo' ? 'Activar' : 'Activar' }}
+          </button>            
+          </ng-container>
+      
         </td>
       </tr>
     </tbody>
   </table>
 
+</div>
 
-<!-- PARTE EN CASO DE QUE SEA RECHAZO -->
+<!-- FORMULARIO -->
+ <!-- ══════════ FORMULARIO ══════════ -->
+<div *ngIf="vista === 'formulario'" class="modulo-container">
+
+  <div class="modulo-header">
+    <h2>{{ modoEdicion ? 'Editar Predio' : 'Nuevo Predio' }}</h2>
+  </div>
+
+  <div class="formulario">
+
+    <div class="campo"><label>Nombre del predio</label>
+      <input type="text" [(ngModel)]="formulario.nombre"/></div>
+
+    <div class="campo"><label>Productor</label>
+      <input type="text" [(ngModel)]="formulario.productorTitular"/></div>
+
+    <div class="campo"><label>numeroICA</label>
+      <input type="text" [(ngModel)]="formulario.numeroICA"/></div>
+
+    <div class="campo"><label>Departamento</label>
+      <input type="text" [(ngModel)]="formulario.predioAsociado"/></div>
 
 
 
+    <div class="campo"><label>Extensión (hectáreas)</label>
+      <input type="number" [(ngModel)]="formulario.extension"/></div>
 
 
+    <!-- Número ICA solo se muestra en edición, es de solo lectura -->
+    <div class="campo" >
+      <label>Número ICA (generado automáticamente)</label>
+      <input type="text" [value]="formulario.numeroICA" readonly class="input-readonly"/>
+    </div>
 
+    <div class="form-botones">
+      <button class="btn-guardar"  (click)="alCancelar()">Guardar</button>
+      <button class="btn-cancelar" (click)="volver()">Cancelar</button>
+    </div>
 
+  </div>
 
 </div>
+
+
+
+
+
+
+
+
+
+
 
 
 <!-- ÉXITO: componente compartido reutilizable -->
