@@ -1,1 +1,77 @@
-<p>gestion-cultivos works!</p>
+<!-- VISTA LISTA  -->
+<div *ngIf="vista === 'lista'" class="modulo-container">
+
+  <div class="modulo-header">
+    <h2>Gestión de Cultivos</h2>
+    <button class="btn-nuevo" (click)="nuevo()">+ Nuevo Cultivo</button>
+  </div>
+
+  <table class="tabla">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Nombre</th>
+        <th>Tipo</th>
+        <th>Descripcion</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of cultivos">
+        <td>{{c.id}}</td>
+        <td>{{ c.nombre }}</td>
+        <td>{{ c.tipo }}</td>
+        <td>{{ c.descripcion }}</td>
+        <td><span [class]="'badge badge-' + c.estado.toLowerCase()">{{ c.estado }}</span></td>
+        <td class="acciones">
+          <button class="btn-editar" (click)="editar(c)">Editar</button>
+          <!--Botones para el activar o desactivar-->
+          <button *ngIf="c.estado === 'Inactivo'" class="btn-aprobar" (click)="toggleEstado(c)">Activar</button>
+          <button *ngIf="c.estado === 'Activo'" class="btn-rechazar" (click)="toggleEstado(c)">Desactivar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+ 
+
+</div>
+
+<!--  VISTA FORMULARIO  -->
+<div *ngIf="vista === 'formulario'" class="modulo-container"> 
+
+  <div class="modulo-header">
+    <h2>{{ modoEdicion ? 'Editar Predio' : 'Nuevo Predio' }}</h2>
+  </div>
+
+  <div class="formulario">
+
+    <div class="campo"><label>Nombre del Cultivo</label>
+      <input type="text" [(ngModel)]="formulario.nombre"/></div>
+
+    <div class="campo"><label>Tipo de Cultivo</label>
+      <input type="text" [(ngModel)]="formulario.tipo"/></div>
+
+    <div class="campo"><label>Descripcion</label>
+      <input type="text" [(ngModel)]="formulario.descripcion"/></div>
+
+
+    <div class="form-botones"><!--LLAMA A LAS FUNCIONES DEL TS QUE GUARDAN O VUELVEN AL INICIO-->
+      <button class="btn-guardar"  (click)="guardar()">Guardar</button>
+      <button class="btn-cancelar" (click)="volver()">Cancelar</button>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- VISTA ÉXITO  -->
+<div *ngIf="vista === 'exito'" class="modulo-container exito-container">
+  <div class="exito-card">
+    <span class="exito-icono">✅</span>
+    <h3>¡Guardado exitosamente!</h3>
+    <p>El Cultivo ha sido registrado correctamente.</p>
+    <button class="btn-volver" (click)="volver()">Volver al listado</button>
+  </div>
+</div>

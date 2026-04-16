@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ModalService } from '../../../soa/modal-service';
 import { PredioService } from '../../../soa/predio.service';
+import { DepartamentosService } from '../../../soa/ubicaciones-service';
 
 interface Predio {
   id: number;
@@ -15,7 +16,7 @@ interface Predio {
   extension: number;
   correo: string;
   numeroICA: string;
-  estado: 'Pendiente' | 'Activo' | 'Rechazado';
+  estado: 'Pendiente' | 'Activo' | 'Rechazado' | 'Inactivo';
 }
 
 @Component({
@@ -29,7 +30,8 @@ export class GestionPredios implements OnInit {
 
   constructor(
     private modalService: ModalService,
-    private predioService: PredioService
+    private predioService: PredioService,
+    private departamentoservice: DepartamentosService
   ) {}
 
   vista: 'lista' | 'formulario' | 'exito' = 'lista';
@@ -42,10 +44,12 @@ export class GestionPredios implements OnInit {
   motivoRechazo = '';
 
   predios: Predio[] = [];
-
   formulario: Predio = this.formularioVacio();
 
+  departamentos: string[] = [];
+
   ngOnInit(): void {
+    this.departamentos = this.departamentoservice.getDepartamentos();
     this.cargarPredios();
   }
 
@@ -69,7 +73,7 @@ export class GestionPredios implements OnInit {
         }));
         this.cargando = false;
       },
-      error: (err: any) => {
+      error: () => {
         this.error = 'Error al cargar predios';
         this.cargando = false;
       }
@@ -78,9 +82,17 @@ export class GestionPredios implements OnInit {
 
   formularioVacio(): Predio {
     return {
-      id: 0, nombre: '', propietario: '', documentoPropietario: '',
-      departamento: '', municipio: '', vereda: '', extension: 0,
-      correo: '', numeroICA: '', estado: 'Pendiente'
+      id: 0,
+      nombre: '',
+      propietario: '',
+      documentoPropietario: '',
+      departamento: '',
+      municipio: '',
+      vereda: '',
+      extension: 0,
+      correo: '',
+      numeroICA: '',
+      estado: 'Pendiente'
     };
   }
 
@@ -98,9 +110,7 @@ export class GestionPredios implements OnInit {
 
   aprobar(predio: Predio) {
     this.predioService.aprobarPredio(predio.numeroICA).subscribe({
-      next: () => {
-        predio.estado = 'Activo';
-      },
+      next: () => { predio.estado = 'Activo'; },
       error: () => { this.error = 'Error al aprobar predio'; }
     });
   }
@@ -109,7 +119,7 @@ export class GestionPredios implements OnInit {
     this.modalService.abrir({
       titulo: 'Motivo de rechazo',
       placeholder: 'Escriba el motivo del rechazo...',
-      alConfirmar: (motivo: string) => {
+      alConfirmar: () => {
         this.predioService.rechazarPredio(p.numeroICA).subscribe({
           next: () => { p.estado = 'Rechazado'; },
           error: () => { this.error = 'Error al rechazar predio'; }
@@ -131,7 +141,7 @@ export class GestionPredios implements OnInit {
 
   desactivar(predio: Predio) {
     this.predioService.desactivarPredio(predio.numeroICA).subscribe({
-      next: () => { predio.estado = 'Rechazado'; },
+      next: () => { predio.estado = 'Inactivo'; },
       error: () => { this.error = 'Error al desactivar predio'; }
     });
   }

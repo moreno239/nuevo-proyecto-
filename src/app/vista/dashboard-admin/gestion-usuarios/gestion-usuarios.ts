@@ -115,6 +115,10 @@ export class GestionUsuariosComponent implements OnInit {
         }
       });
     }
+<<<<<<< HEAD
+=======
+    this.vista = 'lista';
+>>>>>>> 4ceee10 (actualizacion de admin)
   }
 
   alCancelar(): void { this.vista = 'lista'; }

@@ -3,14 +3,18 @@
 
   <div class="modulo-header">
     <h2>Gestión de Predios</h2>
-    <button class="btn-nuevo" (click)="nuevo()">+ Nuevo Predio</button>
+    <button class="btn-nuevo" (click)="nuevo()">+ Nuevo Lote</button>
   </div>
 
   <table class="tabla">
     <thead>
       <tr>
-        <th>Nombre</th><th>Propietario</th><th>Departamento</th>
-        <th>Municipio</th><th>Extensión (ha)</th><th>Estado</th><th>Acciones</th>
+        <th>Codigo</th>
+        <th>Lugar de Produccion</th>
+        <th>Cultivo Asociado</th>
+        <th>Extensión (ha)</th>
+        <th>Estado</th>
+        <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
@@ -71,7 +75,7 @@
   <div class="exito-card">
     <span class="exito-icono">✅</span>
     <h3>¡Guardado exitosamente!</h3>
-    <p>El predio ha sido registrado correctamente.</p>
+    <p>El lote ha sido registrado correctamente.</p>
     <button class="btn-volver" (click)="volver()">Volver al listado</button>
   </div>
 </div>

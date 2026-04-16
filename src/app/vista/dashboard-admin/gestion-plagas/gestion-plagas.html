@@ -1,1 +1,89 @@
-<p>gestion-plagas works!</p>
+<!-- ══════════ LISTA ══════════ -->
+<div *ngIf="vista === 'lista'" class="modulo-container">
+
+  <div class="modulo-header">
+    <h2>Gestión de Plagas</h2>
+    <button class="btn-nuevo" (click)="nuevo()">+ Nueva Plaga</button>
+  </div>
+
+  <table class="tabla">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Nombre</th>
+        <th>Cultivo Asociado</th>
+        <th>Umbral de Alerta</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of plagas">
+        <td>{{ p.id }}</td>
+        <td>{{ p.nombre }}</td>
+        <td>{{ p.cultivoAsociado }}</td>
+        <td>{{ p.umbralAlerta }}</td>
+        <td><span [class]="'badge badge-' + p.estado.toLowerCase()">{{ p.estado }}</span></td>
+        <td class="acciones">
+          <button class="btn-editar" (click)="editar(p)">Editar</button>
+          <!-- Solo si está pendiente muestra aprobar/rechazar -->
+          <ng-container *ngIf="p.estado === 'Activo'">
+            <button class="btn-rechazar"  (click)="toggleEstado(p)">Desactivar</button>
+          </ng-container>
+          <!-- Solo si está activo muestra desactivar -->
+          <button *ngIf="p.estado === 'Inactivo'" class="btn-aprobar" (click)="toggleEstado(p)">Activar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  
+
+</div>
+
+<!-- ══════════ FORMULARIO ══════════ -->
+<div *ngIf="vista === 'formulario'" class="modulo-container">
+
+  <div class="modulo-header">
+    <h2>{{ modoEdicion ? 'Editar Plaga' : 'Nueva Plaga' }}</h2>
+  </div>
+
+  <div class="formulario">
+
+    <div class="campo"><label>Nombre de la Plaga</label>
+      <input type="text" placeholder="Ej: Hongo" [(ngModel)]="formulario.nombre"/>
+    </div>
+
+    <div class="campo">
+        <label>Cultivo Asociado</label>
+        <select [(ngModel)]="formulario.cultivoAsociado" name="cultivo">
+            <option value="">Seleccione un cultivo</option>
+            <option *ngFor="let cultivo of CultivosAsociados" [value]="cultivo">
+            {{ cultivo }}
+            </option>
+        </select>
+    </div>
+
+    <div class="campo"><label>Nivel de Alerta</label>
+      <input type="text"  [(ngModel)]="formulario.umbralAlerta"/>
+    </div>
+
+
+    <div class="form-botones">
+      <button class="btn-guardar"  (click)="guardar()">Guardar</button>
+      <button class="btn-cancelar" (click)="volver()">Cancelar</button>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ══════════ ÉXITO ══════════ -->
+<div *ngIf="vista === 'exito'" class="modulo-container exito-container">
+  <div class="exito-card">
+    <span class="exito-icono">✅</span>
+    <h3>¡Guardado exitosamente!</h3>
+    <p>El predio ha sido registrado correctamente.</p>
+    <button class="btn-volver" (click)="volver()">Volver al listado</button>
+  </div>
+</div>
