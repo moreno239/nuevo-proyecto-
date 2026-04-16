@@ -4,4 +4,5 @@ export interface IServicioLugarProduccion {
   listarLugaresPorProductor(nroDocProductor: string): Promise<any[]>;
   actualizarDatosLugar(nroRegistroICA: string, datos: any): Promise<any>;
   gestionarEstadoLugar(nroRegistroICA: string, estado: string): Promise<void>;
+  listarTodosLugares(): Promise<any[]>;
 }

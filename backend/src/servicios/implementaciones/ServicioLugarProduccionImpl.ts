@@ -60,6 +60,16 @@ export class ServicioLugarProduccionImpl implements IServicioLugarProduccion {
     });
   }
 
+  async listarTodosLugares(): Promise<any[]> {
+    const sql = `SELECT * FROM LUGAR_PRODUCCION`;
+    return new Promise((resolve, reject) => {
+      conexion.query(sql, (error, resultado: any) => {
+        if (error) reject(error);
+        else resolve(resultado);
+      });
+    });
+  }
+
   async gestionarEstadoLugar(nroRegistroICA: string, estado: string): Promise<void> {
     const sql = `UPDATE LUGAR_PRODUCCION SET estado=? WHERE nroRegistroICA=?`;
     return new Promise((resolve, reject) => {

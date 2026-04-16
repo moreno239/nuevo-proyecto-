@@ -1,17 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ModalService } from '../../../soa/modal-service'; // ← modalrechazo
-
+import { ModalService } from '../../../soa/modal-service';
+import { LugarService } from '../../../soa/lugar.service';
 
 export interface LugarProduccion {
-  id:               number;
-  nombre:           string;
+  id: string;
+  nombre: string;
   productorTitular: string;
-  numeroICA:        string;
-  predioAsociado:   string;   // ID o nombre del predio aprobado
-  extension:        number;
-  estado:           'Pendiente' | 'Activo' | 'Inactivo';
+  numeroICA: string;
+  predioAsociado: string;
+  extension: number;
+  estado: 'Pendiente' | 'Activo' | 'Inactivo';
 }
 
 @Component({
@@ -20,107 +20,144 @@ export interface LugarProduccion {
   templateUrl: './gestion-lugares.html',
   styleUrl: './gestion-lugares.css',
 })
-export class GestionLugares {
-  
-constructor(private modalService: ModalService) {}
+export class GestionLugares implements OnInit {
 
-  lugares: LugarProduccion[] = [
-    { id: 1, 
-      nombre: 'Invernadero Norte', 
-      productorTitular: 'Carlos Pérez', 
-      numeroICA: 'ICA-001', 
-      predioAsociado: 'El Paraíso',  
-      extension: 2, estado: 'Activo'    
-    },
-    { id: 2, 
-      nombre: 'Cultivo Sur',       
-      productorTitular: 'Ana Ruiz',     
-      numeroICA: '',        
-      predioAsociado: 'Villa Verde', 
-      extension: 1, 
-      estado: 'Pendiente' 
-    },
-    { id: 3, 
-      nombre: 'Finca El Rosal',    
-      productorTitular: 'María Castro', 
-      numeroICA: 'ICA-002', 
-      predioAsociado: 'Villa Verde', 
-      extension: 4, 
-      estado: 'Activo'    
-    },
-  ];
+  constructor(
+    private modalService: ModalService,
+    private lugarService: LugarService
+  ) {}
 
-
- vista: 'lista' | 'formulario' | 'exito' = 'lista';
+  lugares: LugarProduccion[] = [];
+  vista: 'lista' | 'formulario' | 'exito' = 'lista';
   modoEdicion = false;
+  cargando = false;
+  error = '';
   mostrarModalRechazo = false;
   lugarArechazar: LugarProduccion | null = null;
   motivoRechazo = '';
-//funcion para activar o inactivar un lugar
- toggleEstado(l: LugarProduccion): void { l.estado = l.estado === 'Activo' ? 'Inactivo' : 'Activo'; }
-  
-//formulario 
+
   formulario: LugarProduccion = this.formularioVacio();
 
+  ngOnInit(): void {
+    this.cargarLugares();
+  }
+
+  cargarLugares(): void {
+    this.cargando = true;
+    this.lugarService.listarLugares().subscribe({
+      next: (data: any[]) => {
+        this.lugares = data.map((l: any) => ({
+          id: l.nroRegistroICA,
+          nombre: l.nombre,
+          productorTitular: l.nroDocProductor,
+          numeroICA: l.nroRegistroICA,
+          predioAsociado: l.nroPredial,
+          extension: l.telefonoEmpresa,
+          estado: l.estado === 'APROBADO' ? 'Activo' :
+                  l.estado === 'RECHAZADO' ? 'Inactivo' : 'Pendiente'
+        }));
+        this.cargando = false;
+      },
+      error: (err: any) => {
+        this.error = 'Error al cargar lugares de producción';
+        this.cargando = false;
+      }
+    });
+  }
+
   formularioVacio(): LugarProduccion {
-    return {  id: 0,
-    nombre: '',
-    productorTitular: '',
-    numeroICA: '',
-    predioAsociado:  '' ,   
-    extension: 0,
-    estado: 'Pendiente' 
+    return {
+      id: '', nombre: '', productorTitular: '',
+      numeroICA: '', predioAsociado: '',
+      extension: 0, estado: 'Pendiente'
     };
   }
-  abrirNuevo():void { this.formulario = this.formularioVacio();   this.vista = 'formulario'; } //agregar un nuevo lugar "null"
-  abrirEditar(l: LugarProduccion) //editar un lugar ya existente
-      { this.formulario = { ...l }; this.modoEdicion = true; this.vista = 'formulario'; }
+
+  abrirNuevo(): void {
+    this.formulario = this.formularioVacio();
+    this.modoEdicion = false;
+    this.vista = 'formulario';
+  }
+
+  abrirEditar(l: LugarProduccion): void {
+    this.formulario = { ...l };
+    this.modoEdicion = true;
+    this.vista = 'formulario';
+  }
 
   aprobar(l: LugarProduccion): void {
-    l.estado    = 'Activo';
-    l.numeroICA = 'ICA-' + String(l.id).padStart(3, '0');
+    this.lugarService.aprobarLugar(l.numeroICA).subscribe({
+      next: () => { l.estado = 'Activo'; },
+      error: (err: any) => { this.error = 'Error al aprobar lugar'; }
+    });
   }
 
   abrirRechazo(l: LugarProduccion): void {
     this.modalService.abrir({
-      titulo:      'Motivo de rechazo',
+      titulo: 'Motivo de rechazo',
       placeholder: 'Escriba el motivo del rechazo...',
       alConfirmar: (motivo: string) => {
-        l.estado = 'Inactivo';
-        // cuando haya backend: enviar motivo al API aquí
-    }
-  });
-}
+        this.lugarService.rechazarLugar(l.numeroICA).subscribe({
+          next: () => { l.estado = 'Inactivo'; },
+          error: (err: any) => { this.error = 'Error al rechazar lugar'; }
+        });
+      }
+    });
+  }
 
-
-  desactivar(l: LugarProduccion): void { l.estado = 'Inactivo'; }
-
-  
+  desactivar(l: LugarProduccion): void {
+    this.lugarService.desactivarLugar(l.numeroICA).subscribe({
+      next: () => { l.estado = 'Inactivo'; },
+      error: (err: any) => { this.error = 'Error al desactivar lugar'; }
+    });
+  }
 
   alGuardar(lugar: LugarProduccion): void {
     if (lugar.id) {
-      const i = this.lugares.findIndex(l => l.id === lugar.id);
-      if (i !== -1) this.lugares[i] = lugar;
+      this.lugarService.actualizarLugar(lugar.numeroICA, {
+        nombre: lugar.nombre,
+        nroPredial: lugar.predioAsociado,
+        nombreEmpresa: lugar.nombre,
+        telefonoEmpresa: lugar.extension,
+        ubicacion: '',
+        departamento: '',
+        municipio: '',
+        vereda: ''
+      }).subscribe({
+        next: () => {
+          this.cargarLugares();
+          this.vista = 'exito';
+        },
+        error: (err: any) => { this.error = 'Error al actualizar lugar'; }
+      });
     } else {
-      lugar.id = this.lugares.length + 1;
-      this.lugares.push(lugar);
+      this.lugarService.crearLugar({
+        nombre: lugar.nombre,
+        nroPredial: lugar.predioAsociado,
+        nombreEmpresa: lugar.nombre,
+        telefonoEmpresa: String(lugar.extension),
+        ubicacion: '',
+        departamento: '',
+        municipio: '',
+        vereda: '',
+        nroDocProductor: lugar.productorTitular
+      }).subscribe({
+        next: () => {
+          this.cargarLugares();
+          this.vista = 'exito';
+        },
+        error: (err: any) => { this.error = 'Error al crear lugar'; }
+      });
     }
-    this.vista = 'exito';
+  }
+
+  toggleEstado(l: LugarProduccion): void {
+    l.estado = l.estado === 'Activo' ? 'Inactivo' : 'Activo';
   }
 
   alCancelar(): void { this.vista = 'lista'; }
-  volver():     void { this.vista = 'lista'; }
-
-
-
-
-
-
-
-
-
-
-
-
-  
+  volver(): void {
+    this.vista = 'lista';
+    this.cargarLugares();
+  }
 }

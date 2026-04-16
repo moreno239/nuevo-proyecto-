@@ -34,6 +34,15 @@ export const listarLugaresPorProductor = async (req: Request<{nroDocProductor: s
   }
 };
 
+export const listarTodosLugares = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const lugares = await servicioLugar.listarTodosLugares();
+    res.status(200).json(lugares);
+  } catch (error) {
+    res.status(500).json({ mensaje: 'Error al listar lugares', error });
+  }
+};
+
 export const actualizarLugar = async (req: Request<{nroRegistroICA: string}>, res: Response): Promise<void> => {
   try {
     const resultado = await servicioLugar.actualizarDatosLugar(req.params.nroRegistroICA, req.body);
