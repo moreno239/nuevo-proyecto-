@@ -1,25 +1,36 @@
-import { Injectable } from '@angular/core'
-import { AuthService } from '../soa/auth-service'
+import { Injectable } from '@angular/core';
+import { AuthService } from '../soa/auth-service';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class AuthController {
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
-  // Controlador que llama al servicio de autenticación
-  login(usuario: string, password: string) {
-
-    return this.authService.login(usuario, password)
-
+  login(email: string, clave: string): Observable<any> {
+    return this.authService.login(email, clave);
   }
 
-  logout() {
-
-    this.authService.logout()
-
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
+  obtenerRol(): string | null {
+    return this.authService.obtenerRol();
+  }
+
+  obtenerNombre(): string | null {
+    return this.authService.obtenerNombre();
+  }
+
+  estaAutenticado(): boolean {
+    return this.authService.estaAutenticado();
+  }
 }

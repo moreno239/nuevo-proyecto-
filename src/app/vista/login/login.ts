@@ -1,20 +1,21 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router'
-import { FormsModule } from '@angular/forms'
-import { AuthController } from '../../controlador/auth-control'
+import { Router, RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { NgIf } from '@angular/common';
+import { AuthController } from '../../controlador/auth-control';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, NgIf],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
-
 export class LoginComponent {
 
-  usuario = ''
-  password = ''
+  email = '';
+  clave = '';
+  error = '';
 
   constructor(
     private authController: AuthController,
@@ -22,32 +23,25 @@ export class LoginComponent {
   ) {}
 
   login() {
+    this.authController.login(this.email, this.clave).subscribe({
+      next: (respuesta) => {
+        const token = respuesta.datos.token;
+        const rol = respuesta.datos.rol;
+        const nombre = respuesta.datos.nombre;
 
-    // Llamar al controller
-    const rol = this.authController.login(this.usuario, this.password)
+        this.authController['authService'].guardarSesion(token, rol, nombre);
 
-    // Si el usuario es admin
-    if (rol === 'admin') {
-
-      this.router.navigate(['/admin'])
-
-    }
-
-    // Si es usuario normal
-    else if (rol === 'productor') {
-
-      this.router.navigate(['/usuario'])
-
-    }
-
-    // Si no existe
-    else {
-
-      alert('Usuario o contraseña incorrectos')
-
-    }
-
+        if (rol === 'FUNCIONARIO_ICA') {
+          this.router.navigate(['/admin']);
+        } else if (rol === 'TECNICO') {
+          this.router.navigate(['/tecnico']);
+        } else if (rol === 'PRODUCTOR') {
+          this.router.navigate(['/usuario']);
+        }
+      },
+      error: (err) => {
+        this.error = 'Correo o contraseña incorrectos';
+      }
+    });
   }
-
 }
-

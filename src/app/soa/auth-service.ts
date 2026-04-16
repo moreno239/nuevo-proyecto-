@@ -1,57 +1,62 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core'
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { User } from '../modelo/usuario-modelo';
-import { platform } from 'os';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class AuthService {
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  private apiUrl = 'http://localhost:3000';
 
-  // Lista de usuarios simulados
-  private users: User[] = [
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private http: HttpClient
+  ) {}
 
-    {
-      usuario: 'admin',
-      password: '1234',
-      rol: 'admin'
-    },
-
-    {
-      usuario: 'productor',
-      password: '12345',
-      rol: 'productor'
-    }
-
-  ]
-
-  // Método que valida login
-  login(usuario: string, password: string) {
-
-    // Buscar usuario en la lista
-    const user = this.users.find(
-      u => u.usuario === usuario && u.password === password
-    )
-
-    // Si el usuario existe
-    if (user && isPlatformBrowser(this.platformId)) {
-      localStorage.setItem('userRole', user.rol);
-
-      return user.rol;
-    }
-
-    // Si no existe
-    return null
-
+  login(email: string, clave: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/auth/login`, { email, clave });
   }
 
-    logout() {
-      if (isPlatformBrowser(this.platformId)) {
-      localStorage.removeItem('userRole');
+  guardarSesion(token: string, rol: string, nombre: string): void {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('token', token);
+      localStorage.setItem('userRole', rol);
+      localStorage.setItem('nombre', nombre);
     }
+  }
 
+  logout(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('userRole');
+      localStorage.removeItem('nombre');
+    }
+  }
+
+  obtenerToken(): string | null {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('token');
+    }
+    return null;
+  }
+
+  obtenerRol(): string | null {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('userRole');
+    }
+    return null;
+  }
+
+  obtenerNombre(): string | null {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('nombre');
+    }
+    return null;
+  }
+
+  estaAutenticado(): boolean {
+    return this.obtenerToken() !== null;
   }
 }
