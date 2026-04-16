@@ -10,6 +10,16 @@ export class ServicioPredioImpl implements IServicioPredio {
     return `ICA-${año}-${random}`;
   }
 
+  async listarTodosPredios(): Promise<any[]> {
+    const sql = `SELECT * FROM PREDIO`;
+    return new Promise((resolve, reject) => {
+      conexion.query(sql, (error, resultado: any) => {
+        if (error) reject(error);
+        else resolve(resultado);
+      });
+    });
+  }
+
   async solicitarRegistroPredio(datos: any): Promise<any> {
     const nroRegistroICA = this.generarNroRegistroICA();
     const sql = `INSERT INTO PREDIO (nroRegistroICA, nroPredial, nombre, area, correo, codigoDaneVereda, nroDocProductor, estado) 

@@ -4,4 +4,5 @@ export interface IServicioPredio {
   listarPrediosPorProductor(nroDocProductor: string): Promise<any[]>;
   actualizarDatosPredio(nroRegistroICA: string, datos: any): Promise<any>;
   gestionarEstadoPredio(nroRegistroICA: string, estado: string): Promise<void>;
+  listarTodosPredios(): Promise<any[]>;
 }

@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ModalService } from '../../../soa/modal-service'; // ← modal rechazo
-
+import { ModalService } from '../../../soa/modal-service';
+import { PredioService } from '../../../soa/predio.service';
 
 interface Predio {
   id: number;
@@ -14,7 +14,7 @@ interface Predio {
   vereda: string;
   extension: number;
   correo: string;
-  numeroICA: string;   // se genera solo al aprobar
+  numeroICA: string;
   estado: 'Pendiente' | 'Activo' | 'Rechazado';
 }
 
@@ -25,40 +25,63 @@ interface Predio {
   templateUrl: './gestion-predios.html',
   styleUrl: './gestion-predios.css'
 })
-export class GestionPredios {
+export class GestionPredios implements OnInit {
 
-  constructor(private modalService: ModalService) {}
-  
+  constructor(
+    private modalService: ModalService,
+    private predioService: PredioService
+  ) {}
 
   vista: 'lista' | 'formulario' | 'exito' = 'lista';
   modoEdicion = false;
+  cargando = false;
+  error = '';
 
-  // Modal de rechazo
   mostrarModalRechazo = false;
   predioArechazar: Predio | null = null;
   motivoRechazo = '';
 
-  predios: Predio[] = [
-    { id: 1, nombre: 'El Paraíso',  propietario: 'Carlos Pérez',  documentoPropietario: '1000001', departamento: 'Santander', municipio: 'Bucaramanga', vereda: 'El Carmen', extension: 5,  correo: 'carlos@mail.com', numeroICA: 'ICA-001', estado: 'Activo'    },
-    { id: 2, nombre: 'La Esperanza',propietario: 'Ana Ruiz',      documentoPropietario: '1000002', departamento: 'Boyacá',    municipio: 'Tunja',       vereda: 'Centro',    extension: 3,  correo: 'ana@mail.com',    numeroICA: '',        estado: 'Pendiente' },
-    { id: 3, nombre: 'Los Pinos',   propietario: 'Pedro Torres',  documentoPropietario: '1000003', departamento: 'Cundinamarca', municipio: 'Zipaquirá', vereda: 'El Rosal', extension: 8,  correo: 'pedro@mail.com',  numeroICA: '',        estado: 'Pendiente' },
-  ];
-
- toggleEstado(predio: Predio): void { predio.estado = predio.estado === 'Activo' ? 'Rechazado' : 'Activo'; }
+  predios: Predio[] = [];
 
   formulario: Predio = this.formularioVacio();
 
+  ngOnInit(): void {
+    this.cargarPredios();
+  }
+
+  cargarPredios(): void {
+    this.cargando = true;
+    this.predioService.listarPredios().subscribe({
+      next: (data: any) => {
+        this.predios = data.map((p: any) => ({
+          id: p.nroRegistroICA,
+          nombre: p.nombre,
+          propietario: p.nroDocProductor,
+          documentoPropietario: p.nroDocProductor,
+          departamento: '',
+          municipio: '',
+          vereda: p.codigoDaneVereda || '',
+          extension: p.area,
+          correo: p.correo || '',
+          numeroICA: p.nroRegistroICA,
+          estado: p.estado === 'APROBADO' ? 'Activo' :
+                  p.estado === 'PENDIENTE' ? 'Pendiente' : 'Rechazado'
+        }));
+        this.cargando = false;
+      },
+      error: (err: any) => {
+        this.error = 'Error al cargar predios';
+        this.cargando = false;
+      }
+    });
+  }
+
   formularioVacio(): Predio {
-    return { id: 0, nombre: '', 
-      propietario: '', 
-      documentoPropietario: '', 
-      departamento: '', 
-      municipio: '', 
-      vereda: '', 
-      extension: 0, 
-      correo: '', 
-      numeroICA: '', 
-      estado: 'Pendiente' };
+    return {
+      id: 0, nombre: '', propietario: '', documentoPropietario: '',
+      departamento: '', municipio: '', vereda: '', extension: 0,
+      correo: '', numeroICA: '', estado: 'Pendiente'
+    };
   }
 
   nuevoPredio() {
@@ -73,22 +96,26 @@ export class GestionPredios {
     this.vista = 'formulario';
   }
 
-  // Aprueba el predio y genera número ICA automático
   aprobar(predio: Predio) {
-    predio.estado = 'Activo';
-    predio.numeroICA = 'ICA-' + String(predio.id).padStart(3, '0');
+    this.predioService.aprobarPredio(predio.numeroICA).subscribe({
+      next: () => {
+        predio.estado = 'Activo';
+      },
+      error: () => { this.error = 'Error al aprobar predio'; }
+    });
   }
 
-  // Abre modal de rechazo — el motivo es obligatorio
-  abrirRechazo(p: Predio):void {
-      this.modalService.abrir({
-      titulo:      'Motivo de rechazo',
+  abrirRechazo(p: Predio): void {
+    this.modalService.abrir({
+      titulo: 'Motivo de rechazo',
       placeholder: 'Escriba el motivo del rechazo...',
       alConfirmar: (motivo: string) => {
-        p.estado = 'Pendiente';
-        // cuando haya backend: enviar motivo al API aquí
-    }
-  });
+        this.predioService.rechazarPredio(p.numeroICA).subscribe({
+          next: () => { p.estado = 'Rechazado'; },
+          error: () => { this.error = 'Error al rechazar predio'; }
+        });
+      }
+    });
   }
 
   confirmarRechazo() {
@@ -103,22 +130,42 @@ export class GestionPredios {
   }
 
   desactivar(predio: Predio) {
-    predio.estado = 'Rechazado'; // reutilizamos como "inactivo"
+    this.predioService.desactivarPredio(predio.numeroICA).subscribe({
+      next: () => { predio.estado = 'Rechazado'; },
+      error: () => { this.error = 'Error al desactivar predio'; }
+    });
   }
 
   guardar() {
     if (this.modoEdicion) {
-      const index = this.predios.findIndex(p => p.id === this.formulario.id);
-      if (index !== -1) this.predios[index] = { ...this.formulario };
+      this.predioService.actualizarPredio(this.formulario.numeroICA, {
+        nroPredial: this.formulario.documentoPropietario,
+        nombre: this.formulario.nombre,
+        area: this.formulario.extension,
+        correo: this.formulario.correo,
+        codigoDaneVereda: this.formulario.vereda
+      }).subscribe({
+        next: () => { this.cargarPredios(); this.vista = 'exito'; },
+        error: () => { this.error = 'Error al actualizar predio'; }
+      });
     } else {
-      this.formulario.id = this.predios.length + 1;
-      this.predios.push({ ...this.formulario });
+      this.predioService.crearPredio({
+        nroPredial: this.formulario.documentoPropietario,
+        nombre: this.formulario.nombre,
+        area: this.formulario.extension,
+        correo: this.formulario.correo,
+        codigoDaneVereda: this.formulario.vereda,
+        nroDocProductor: this.formulario.documentoPropietario
+      }).subscribe({
+        next: () => { this.cargarPredios(); this.vista = 'exito'; },
+        error: () => { this.error = 'Error al crear predio'; }
+      });
     }
-    this.vista = 'exito';
   }
 
   volver() {
     this.mostrarModalRechazo = false;
     this.vista = 'lista';
+    this.cargarPredios();
   }
 }

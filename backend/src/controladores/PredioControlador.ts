@@ -43,6 +43,15 @@ export const actualizarPredio = async (req: Request<{nroRegistroICA: string}>, r
   }
 };
 
+export const listarTodosPredios = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const predios = await servicioPredio.listarTodosPredios();
+    res.status(200).json(predios);
+  } catch (error) {
+    res.status(500).json({ mensaje: 'Error al listar predios', error });
+  }
+};
+
 export const gestionarEstado = async (req: Request<{nroRegistroICA: string}>, res: Response): Promise<void> => {
   try {
     await servicioPredio.gestionarEstadoPredio(req.params.nroRegistroICA, req.body.estado);
