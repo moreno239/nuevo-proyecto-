@@ -1,14 +1,14 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { isPlatformBrowser } from '@angular/common';  
-import { Router, RouterLinkWithHref } from '@angular/router';
+import { Router, RouterLinkWithHref, RouterLinkActive } from '@angular/router';
 import { MenuService } from '../../soa/menu-services';
 import { MenuItem } from '../../modelo/menu-item-modelo';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterLinkWithHref],
+  imports: [CommonModule, RouterLinkWithHref, RouterLinkActive],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css'
 })

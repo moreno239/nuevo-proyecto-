@@ -15,7 +15,7 @@
   <div class="sidebar-menu">
     <p class="etiqueta">menú</p>
 
-    <button *ngFor="let item of menuItems" [routerLink]="item.ruta">
+    <button *ngFor="let item of menuItems" [routerLink]="item.ruta" routerLinkActive="activo">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
            stroke-width="1.5" stroke="currentColor" class="icono-menu">
         <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="item.svgPath"/>

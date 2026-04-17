@@ -9,7 +9,7 @@
       <input
         type="email"
         placeholder="Ingresar correo"
-        [(ngModel)]="email"
+        [(ngModel)]="usuario"
       >
     </div>
 
@@ -18,13 +18,10 @@
       <input
         type="password"
         placeholder="Ingresar contraseña"
-        [(ngModel)]="clave"
+        [(ngModel)]="password"
       >
     </div>
 
-    <div class="campo-grupo" *ngIf="error">
-      <p style="color: red; font-size: 13px;">{{ error }}</p>
-    </div>
 
     <div class="campo-grupo">
       <button class="btn-ingreso" (click)="login()">

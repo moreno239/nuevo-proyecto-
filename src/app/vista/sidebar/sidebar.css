@@ -116,3 +116,10 @@ background:var(--verde-botones);
     width: 30px;
     height: 30px;
 }
+
+/* Estado activo — se aplica automáticamente cuando la ruta coincide */
+.sidebar-menu button.activo {
+  background: var(--verde-botones);  /* color más claro que el fondo */
+  transform: translateX(3px);        /* mismo efecto que el hover */
+  border-left: 3px solid #a8d5b5;   /* línea indicadora a la izquierda */
+}
