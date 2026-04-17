@@ -23,18 +23,9 @@ export class SidebarComponent implements OnInit {
     TECNICO: 'Técnico'
   };
 
-  // Mapeo de roles del backend a roles del menú
-  rolMenu: Record<string, string> = {
-    FUNCIONARIO_ICA: 'admin',
-    PRODUCTOR: 'productor',
-    TECNICO: 'tecnico'
-  };
-
-  constructor(
-    private menuService: MenuService,
-    private router: Router,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  constructor(private menuService: MenuService, private router: Router, 
+    @Inject(PLATFORM_ID) private platformId: Object ) 
+    {}
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
