@@ -31,7 +31,7 @@
           <!-- Solo si está activo muestra desactivar -->
           <button *ngIf="p.estado === 'Activo'" class="btn-rechazar" (click)="desactivar(p)">Desactivar</button>
           <ng-container>
-          <button *ngIf="p.estado === 'Rechazado'" class="btn-aprobar" (click)="aprobar(p)">Activar</button>
+          <button *ngIf="p.estado === 'Inactivo'" class="btn-aprobar" (click)="aprobar(p)">Activar</button>
           </ng-container>
         </td>
       </tr>
@@ -49,18 +49,20 @@
   <div class="formulario">
 
     <div class="campo"><label>Nombre del predio</label>
-      <input type="text" [(ngModel)]="formulario.nombre"/></div>
+      <input type="text" placeholder="El prado"  [(ngModel)]="formulario.nombre"/></div>
 
     <div class="campo"><label>Propietario</label>
-      <input type="text" [(ngModel)]="formulario.propietario"/></div>
+      <input type="text" placeholder="Nombre del Propietario"  [(ngModel)]="formulario.propietario"/></div>
 
     <div class="campo"><label>Documento del propietario</label>
-      <input type="text" [(ngModel)]="formulario.documentoPropietario"/></div>
+      <input type="text" placeholder="Numero de documento"  [(ngModel)]="formulario.documentoPropietario"/></div>
 
     <div class="campo"><label>Departamento</label>
-      <input type="text" [(ngModel)]="formulario.departamento"/></div>
-
-    <div class="campo"><label>Municipio</label>
+      <select [(ngModel)]="formulario.departamento" name="departamento" >
+      <option type = "text" *ngFor="let dep of departamentos">{{dep}}</option>
+      </select>
+    </div>
+          <div class="campo"><label>Municipio</label>
       <input type="text" [(ngModel)]="formulario.municipio"/></div>
 
     <div class="campo"><label>Vereda</label>

@@ -18,9 +18,9 @@ export class SidebarComponent implements OnInit {
   menuItems: MenuItem[] = [];
 
   labelRol: Record<string, string> = {
-    productor: 'Productor',
-    admin: 'Administrador',
-    tecnico: 'Técnico'
+    PRODUCTOR: 'Productor',
+    FUNCIONARIO_ICA: 'Administrador',
+    TECNICO: 'Técnico'
   };
 
   constructor(private menuService: MenuService, private router: Router, 
@@ -28,13 +28,17 @@ export class SidebarComponent implements OnInit {
     {}
 
   ngOnInit(): void {
-        if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId)) {
       this.rol = localStorage.getItem('userRole') ?? '';
-      this.menuItems = this.menuService.getMenu(this.rol);
+      const rolParaMenu = this.rolMenu[this.rol] ?? this.rol;
+      this.menuItems = this.menuService.getMenu(rolParaMenu);
     }
-  } 
+  }
+
   cerrarSesion(): void {
     localStorage.removeItem('userRole');
+    localStorage.removeItem('token');
+    localStorage.removeItem('nombre');
     this.router.navigate(['']);
   }
 }

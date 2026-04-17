@@ -3,47 +3,47 @@
   <div class="login-left">
 
     <h2 class="titulo">Iniciar Sesión</h2>
-  <div class="campo-grupo">
-    <label for="">Usuario</label>
-    <input
-      type="text"
-      placeholder="Ingresar Usuario"
-      [(ngModel)]="usuario"
-    >
-    </div>
+
     <div class="campo-grupo">
-    <label for="">Contraseña</label>
-    <input
-      type="password"
-      placeholder="Ingresar Contraseña"
-      [(ngModel)]="password"
-    >
+      <label for="">Correo electrónico</label>
+      <input
+        type="email"
+        placeholder="Ingresar correo"
+        [(ngModel)]="email"
+      >
     </div>
+
     <div class="campo-grupo">
-    <button class="btn-ingreso" (click)="login()">
-      Ingresar
-    </button>
+      <label for="">Contraseña</label>
+      <input
+        type="password"
+        placeholder="Ingresar contraseña"
+        [(ngModel)]="clave"
+      >
     </div>
+
+    <div class="campo-grupo" *ngIf="error">
+      <p style="color: red; font-size: 13px;">{{ error }}</p>
+    </div>
+
+    <div class="campo-grupo">
+      <button class="btn-ingreso" (click)="login()">
+        Ingresar
+      </button>
+    </div>
+
   </div>
 
   <div class="login-right">
-        <!-- Nombre de la empresa -->
-        <h2 class="nombre-empresa">ASOHOFRUCOL</h2>
-
-        <!-- Texto informativo principal -->
-        <p class="texto-info">
-          Gestiona tus predios de manera eficiente y segura.<br>
-          Nuestra plataforma centraliza toda la información que<br>
-          necesitas para tomar decisiones rápidas e inteligentes.
-        </p>
-        <div class="separador"></div>
-        <!-- Texto de invitación al registro -->
-        <p class="texto-registro">¿Aún no tienes una cuenta?</p>
-
-        <!-- Botón de solicitar cuenta -->
-        <button type="button" class="btn-solicitar" routerLink="request">Solicitar</button>
-
-
+    <h2 class="nombre-empresa">ASOHOFRUCOL</h2>
+    <p class="texto-info">
+      Gestiona tus predios de manera eficiente y segura.<br>
+      Nuestra plataforma centraliza toda la información que<br>
+      necesitas para tomar decisiones rápidas e inteligentes.
+    </p>
+    <div class="separador"></div>
+    <p class="texto-registro">¿Aún no tienes una cuenta?</p>
+    <button type="button" class="btn-solicitar" routerLink="request">Solicitar</button>
   </div>
 
 </div>

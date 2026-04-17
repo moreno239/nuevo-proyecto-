@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormUsuario, Usuario } from '../form-usuario/form-usuario';
+import { UsuarioService } from '../../../soa/usuario';
 
 @Component({
   selector: 'app-gestion-usuarios',
@@ -8,53 +9,118 @@ import { FormUsuario, Usuario } from '../form-usuario/form-usuario';
   templateUrl: './gestion-usuarios.html',
   styleUrl: './gestion-usuarios.css',
 })
-
-export class GestionUsuariosComponent {
+export class GestionUsuariosComponent implements OnInit {
 
   vista: 'lista' | 'formulario' | 'exito' = 'lista';
-  usuarioSeleccionado: Usuario | null = null;  // null = nuevo, objeto = editar
-// usuarios como prueba sin conexion a base de datos 
-  usuarios: Usuario[] = [
-    { 
-      id: 1, 
-      identificacion: '1000001', 
-      nombre: 'Carlos', 
-      apellido: 'Pérez', 
-      telefono: '3101234567', 
-      correo: 'carlos@mail.com', 
-      rol: 'Productor', 
-      estado: 'Activo'   },
+  usuarioSeleccionado: Usuario | null = null;
+  usuarios: Usuario[] = [];
+  cargando = false;
+  error = '';
 
-    { 
-      id: 2, 
-      identificacion: '1000002', 
-      nombre: 'Laura',  
-      apellido: 'Gómez', 
-      telefono: '3209876543', 
-      correo: 'laura@mail.com',  
-      rol: 'Técnico',   
-      estado: 'Activo'  
-     }
-  ];
-//funciones para llamar al usuario seleccionado o crear un nuevo usuario
-  nuevoUsuario(): void { this.usuarioSeleccionado = null; this.vista = 'formulario'; }
-  editar(u: Usuario): void { this.usuarioSeleccionado = u;    this.vista = 'formulario'; }
-  //funcion para el estado de cada usuario segun a eleccion 
-  toggleEstado(u: Usuario): void { u.estado = u.estado === 'Activo' ? 'Inactivo' : 'Activo'; }
+  constructor(private usuarioService: UsuarioService) {}
 
+  ngOnInit(): void {
+    this.cargarUsuarios();
+  }
 
-  // se llama la funcion si es el caso de ya estar asociado acutaliza o se agrega si es nuevo 
+  cargarUsuarios(): void {
+    this.cargando = true;
+    this.usuarioService.listarUsuarios().subscribe({
+      next: (data) => {
+        this.usuarios = data.map((u: any) => ({
+          id: u.identificacion,
+          identificacion: u.identificacion,
+          nombre: u.nombre,
+          apellido: u.apellido,
+          telefono: u.telefono,
+          correo: u.email,
+          rol: u.rol,
+          estado: u.estado === 'ACTIVO' ? 'Activo' : 'Inactivo'
+        }));
+        this.cargando = false;
+      },
+      error: (err) => {
+        this.error = 'Error al cargar usuarios';
+        this.cargando = false;
+      }
+    });
+  }
+
+  nuevoUsuario(): void { 
+    this.usuarioSeleccionado = null; 
+    this.vista = 'formulario'; 
+  }
+
+  editar(u: Usuario): void { 
+    this.usuarioSeleccionado = u; 
+    this.vista = 'formulario'; 
+  }
+
+  toggleEstado(u: Usuario): void {
+    if (u.estado === 'Activo') {
+      this.usuarioService.desactivarUsuario(u.identificacion).subscribe({
+        next: () => {
+          u.estado = 'Inactivo';
+        },
+        error: () => {
+          this.error = 'Error al cambiar estado';
+        }
+      });
+    } else {
+      this.usuarioService.activarUsuario(u.identificacion).subscribe({
+        next: () => {
+          u.estado = 'Activo';
+        },
+        error: () => {
+          this.error = 'Error al cambiar estado';
+        }
+      });
+    }
+  }
+
   alGuardar(usuario: Usuario): void {
     if (usuario.id) {
-      const i = this.usuarios.findIndex(u => u.id === usuario.id);
-      if (i !== -1) this.usuarios[i] = usuario;
+      this.usuarioService.actualizarUsuario(usuario.identificacion, {
+        nombre: usuario.nombre,
+        apellido: usuario.apellido,
+        telefono: usuario.telefono,
+        email: usuario.correo,
+        rol: usuario.rol
+      }).subscribe({
+        next: () => {
+          this.cargarUsuarios();
+          this.vista = 'exito';
+        },
+        error: () => {
+          this.error = 'Error al actualizar usuario';
+        }
+      });
     } else {
-      usuario.id = this.usuarios.length + 1;
-      this.usuarios.push(usuario);
+      this.usuarioService.crearUsuario({
+        identificacion: usuario.identificacion,
+        nombreUsuario: usuario.correo,
+        clave: '123456',
+        nombre: usuario.nombre,
+        apellido: usuario.apellido,
+        telefono: usuario.telefono,
+        email: usuario.correo,
+        rol: usuario.rol
+      }).subscribe({
+        next: () => {
+          this.cargarUsuarios();
+          this.vista = 'exito';
+        },
+        error: () => {
+          this.error = 'Error al crear usuario';
+        }
+      });
     }
-    this.vista = 'exito';
+    this.vista = 'lista';
   }
 
   alCancelar(): void { this.vista = 'lista'; }
-  volver():     void { this.vista = 'lista'; }
+  volver(): void { 
+    this.vista = 'lista'; 
+    this.cargarUsuarios();
+  }
 }

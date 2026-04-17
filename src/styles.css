@@ -76,7 +76,9 @@ border-bottom:1px solid #ddd;
 /* CSS PARA TODOS LOS MODULOS DEL ADMIN */
 
 /* ── Contenedor general ── */
-.modulo-container { padding: 2rem; }
+.modulo-container { 
+  padding: 2rem;
+ }
 
 .modulo-header {
   display: flex;
