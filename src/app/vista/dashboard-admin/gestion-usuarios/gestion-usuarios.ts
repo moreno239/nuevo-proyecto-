@@ -58,4 +58,3 @@ export class GestionUsuariosComponent {
   alCancelar(): void { this.vista = 'lista'; }
   volver():     void { this.vista = 'lista'; }
 }
-

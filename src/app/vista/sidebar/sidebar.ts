@@ -4,7 +4,6 @@ import { isPlatformBrowser } from '@angular/common';
 import { Router, RouterLinkWithHref } from '@angular/router';
 import { MenuService } from '../../soa/menu-services';
 import { MenuItem } from '../../modelo/menu-item-modelo';
-import { platform } from 'os';
 
 @Component({
   selector: 'app-sidebar',
@@ -24,7 +23,9 @@ export class SidebarComponent implements OnInit {
     tecnico: 'Técnico'
   };
 
-  constructor(private menuService: MenuService, private router: Router, @Inject(PLATFORM_ID) private platformId: Object ) {}
+  constructor(private menuService: MenuService, private router: Router, 
+    @Inject(PLATFORM_ID) private platformId: Object ) 
+    {}
 
   ngOnInit(): void {
         if (isPlatformBrowser(this.platformId)) {
