@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ExitoComponent } from '../../exito/exito';
 
 interface Lote {
   id: number;
@@ -14,7 +15,7 @@ interface Lote {
 @Component({
   selector: 'app-gestion-lotes',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ExitoComponent ],
   templateUrl: './gestion-lotes.html',
   styleUrl: './gestion-lotes.css'
 })
