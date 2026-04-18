@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ModalService } from '../../../soa/modal-service';
 import { LugarService } from '../../../soa/lugar.service';
+import { ExitoComponent } from '../../exito/exito';
 
 export interface LugarProduccion {
   id: string;
@@ -16,7 +17,7 @@ export interface LugarProduccion {
 
 @Component({
   selector: 'app-gestion-lugares',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ExitoComponent],
   templateUrl: './gestion-lugares.html',
   styleUrl: './gestion-lugares.css',
 })

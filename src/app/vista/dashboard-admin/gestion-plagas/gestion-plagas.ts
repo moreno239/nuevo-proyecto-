@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ExitoComponent } from '../../exito/exito';
 
 interface Plaga{
   id: number;
@@ -13,7 +14,7 @@ interface Plaga{
 
 @Component({
   selector: 'app-gestion-plagas',
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule, ExitoComponent],
   templateUrl: './gestion-plagas.html',
   styleUrl: './gestion-plagas.css',
 })

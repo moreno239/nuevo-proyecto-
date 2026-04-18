@@ -67,11 +67,8 @@
 </div>
 
 <!-- VISTA ÉXITO  -->
-<div *ngIf="vista === 'exito'" class="modulo-container exito-container">
-  <div class="exito-card">
-    <span class="exito-icono">✅</span>
-    <h3>¡Guardado exitosamente!</h3>
-    <p>El Cultivo ha sido registrado correctamente.</p>
-    <button class="btn-volver" (click)="volver()">Volver al listado</button>
-  </div>
-</div>
+<app-exito
+  *ngIf="vista === 'exito'"
+  mensaje="Los cultivos han sido actualizados correctamente."
+  (volver)="volver()">
+</app-exito>

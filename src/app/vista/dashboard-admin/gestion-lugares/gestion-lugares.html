@@ -106,3 +106,8 @@
 
 
 <!-- ÉXITO: componente compartido reutilizable -->
+<app-exito
+  *ngIf="vista === 'exito'"
+  mensaje="Los lugares de produccion han sido actualizados correctamente."
+  (volver)="volver()">
+</app-exito>

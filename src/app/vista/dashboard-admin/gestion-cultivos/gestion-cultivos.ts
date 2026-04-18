@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ExitoComponent } from '../../exito/exito';
 
 interface Cultivo {//creacion de los datos que debe tener el cultivo
   id: number;
@@ -12,7 +13,7 @@ interface Cultivo {//creacion de los datos que debe tener el cultivo
 
 @Component({
   selector: 'app-gestion-cultivos',
-  imports: [CommonModule, FormsModule ],
+  imports: [CommonModule, FormsModule, ExitoComponent ],
   templateUrl: './gestion-cultivos.html',
   styleUrl: './gestion-cultivos.css',
 })

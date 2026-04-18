@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ModalService } from '../../../soa/modal-service';
 import { PredioService } from '../../../soa/predio.service';
 import { DepartamentosService } from '../../../soa/ubicaciones-service';
+import { ExitoComponent } from '../../exito/exito';
 
 interface Predio {
   id: number;
@@ -22,7 +23,7 @@ interface Predio {
 @Component({
   selector: 'app-gestion-predios',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ExitoComponent],
   templateUrl: './gestion-predios.html',
   styleUrl: './gestion-predios.css'
 })

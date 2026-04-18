@@ -79,11 +79,8 @@
 </div>
 
 <!-- ══════════ ÉXITO ══════════ -->
-<div *ngIf="vista === 'exito'" class="modulo-container exito-container">
-  <div class="exito-card">
-    <span class="exito-icono">✅</span>
-    <h3>¡Guardado exitosamente!</h3>
-    <p>El predio ha sido registrado correctamente.</p>
-    <button class="btn-volver" (click)="volver()">Volver al listado</button>
-  </div>
-</div>
+<app-exito
+  *ngIf="vista === 'exito'"
+  mensaje="Las plagas han sido actualizadas correctamente."
+  (volver)="volver()">
+</app-exito>
