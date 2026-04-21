@@ -26,6 +26,13 @@
     gap: 15px;
 }
 
+.login-card form {
+    flex: 1; /* Ocupa todo el alto disponible */
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;/* Distribuye los 3 bloques */
+}
+
 /* Título */
 .titulo {
     font-family: 'Playfair Display', serif;
@@ -85,8 +92,8 @@
     font-size: 13px;
     color: #2d9157;
     text-decoration: none;
-    margin-top: -5px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 30px;
     transition: color 0.3s;
 }
 
