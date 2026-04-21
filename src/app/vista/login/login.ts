@@ -6,7 +6,7 @@ import { AuthController } from '../../controlador/auth-control';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })

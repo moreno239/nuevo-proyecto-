@@ -1,40 +1,55 @@
-.login-container{
-    display:flex;
-    height:100vh;
-}
-.titulo{
-    font-family: 'Playfair Display', serif;
-    font-size: 35px;
-    line-height:1.5;
-    font-weight: bold;
-    color: #428e58;
-}
-/*seccion donde esta el login*/
-.login-left{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    gap:15px;
-}
-/*ventana donde esta la info de asohofrucol*/
-.login-right{
-    flex:1;
-    background: rgb(38, 126, 67);
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    padding:40px;
-    text-align:center;
+/* Contenedor principal con fondo personalizable */
+.login-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea la card a la derecha */
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    padding: 0 8%;
+
+    background: url('../../imagenes/terreno.jpg') no-repeat center center; /*imagen de fondo*/
+    background-size: cover;
+    
 }
 
-.campo-grupo{
+/* Card del login */
+.login-card {
     width: 100%;
-    max-width: 350px;
+    max-width: 420px;
+    background-color: #ffffff;
+    border: 1px solid rgba(45, 145, 87, 0.2); /* Borde verde sutil */
+    border-radius: 14px;
+    padding: 45px 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
-/*seccion de los nombres encima de los input*/
+
+/* Título */
+.titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    line-height: 1.3;
+    font-weight: bold;
+    color: #428e58;
+    text-align: center;
+    margin: 0;
+}
+
+/* Subtítulo */
+.subtitulo {
+    font-size: 14px;
+    color: #777;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Grupo de campos */
+.campo-grupo {
+    width: 100%;
+}
+
 .campo-grupo label {
     display: block;
     font-size: 13px;
@@ -44,12 +59,11 @@
     letter-spacing: 0.3px;
 }
 
-/*seccion de los imputs del login*/
 .campo-grupo input {
     width: 100%;
     height: 48px;
     padding: 16px 18px;
-    border: 1.5px solid  #a8d5b9;
+    border: 1.5px solid #a8d5b9;
     border-radius: 10px;
     font-family: 'DM Sans', sans-serif;
     font-size: 14px;
@@ -59,72 +73,54 @@
     outline: none;
 }
 
-/* Estado de foco: resalta con color verde */
 .campo-grupo input:focus {
-    border-color:  #2d9157;
+    border-color: #2d9157;
     background-color: #d6d8d777;
     box-shadow: 0 0 0 4px rgba(45, 145, 87, 0.1);
 }
-/*Seccion del boton ingreso*/
-.btn-ingreso{
-    padding:10px 20px;
-    background: var(--verde-botones2);
-    color:white;
-    border:none;
-    cursor:pointer;
+
+/* Enlace olvidaste tu contraseña*/
+.olvido-password {
+    align-self: flex-end;
+    font-size: 13px;
+    color: #2d9157;
+    text-decoration: none;
+    margin-top: -5px;
+    margin-bottom: 10px;
+    transition: color 0.3s;
+}
+
+.olvido-password:hover {
+    color: #115e31;
+    text-decoration: underline;
+}
+
+/* Boton Ingresar */
+.btn-ingreso {
+    padding: 12px 20px;
+    background: var(--verde-botones2, #2d9157);
+    color: white;
+    border: none;
+    cursor: pointer;
     border-radius: 10px;
     font-size: 15px;
-    font-weight: 500px;
+    font-weight: 500;
     width: 100%;
     transition: all 0.4s ease;
 }
 
-.btn-ingreso:hover{
-    background-color: var(--verde-botones);
+.btn-ingreso:hover {
+    background-color: var(--verde-botones, #115e31);
 }
 
+/* Responsive */
+@media (max-width: 600px) {
+    .login-container {
+        justify-content: center;
+        padding: 20px;
+    }
 
-.btn-solicitar{
-    display: inline-block;
-    padding: 12px 36px;
-    background: transparent;
-    border: 2px solid rgba(255, 255, 255, 0.6);
-    border-radius: 50px;     /* estilo capsula*/
-    cursor: pointer;
-    color: white;
-    transition: all 0.4s ease;
-    
-}
-
-.btn-solicitar:hover{
-    background-color: rgba(148, 145, 145, 0.247);
-    border-color: #ffff;
-
-}
-/*Se emplea con el cursor encima del boton*/
-
-/*h2 nombre de asohofrucol*/
-.nombre-empresa{
-    font-family:  'Playfair Display', serif;
-    font-size: 40px;
-    color: #f5f5f6 ;
-
-}
-/*texto debajo del titulo*/
-.texto-info{
-    font-size: 15px;
-    color: #f5f5f6;
-
-}
-.texto-registro{
-    font-size: 13px;
-    color: #f5f5f6;
-}
-/*linea que divide la info con el boton*/
-.separador{
-    width: 300px;
-    height: 2px;
-    background: rgba(255,255,255,0.4);
-    border-radius: 2px;
-    margin: 0 auto 30px auto;
+    .login-card {
+        padding: 35px 25px;
+    }
 }
