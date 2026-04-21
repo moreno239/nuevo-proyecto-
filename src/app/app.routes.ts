@@ -7,7 +7,6 @@ import { ViewInicio} from './vista/dashboard-user/view-inicio'
 import { ViewForm} from './vista/dashboard-user/view-form'
 import { ViewPredio } from './vista/dashboard-user/view-predio';
 import { ViewProduccion } from './vista/dashboard-user/view-produccion';
-import { PageRequest } from './vista/page-request/page-request';
 import { ViewFormProduccion } from './vista/dashboard-user/view-form-produccion';
 import { ViewInspecciones } from './vista/dashboard-user/view-inspecciones';
 import { GestionCultivos } from './vista/dashboard-admin/gestion-cultivos/gestion-cultivos';
@@ -24,10 +23,7 @@ import { AdminInicio } from './vista/dashboard-admin/admin-inicio/admin-inicio';
 
 export const routes: Routes = [
 
-  { path: '', component: LoginComponent ,
-    children:[
-      {path: 'request', component: PageRequest}
-    ]
+  { path: '', component: LoginComponent
   },
 
   { path: 'admin', component: DashboardAdminComponent,
